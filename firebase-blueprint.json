@@ -1,0 +1,106 @@
+{
+  "entities": {
+    "users": {
+      "fields": {
+        "uid": { "type": "string", "description": "User ID or unique auth identifier" },
+        "name": { "type": "string", "description": "Customer full name" },
+        "email": { "type": "string", "description": "Account email address" },
+        "passwordHash": { "type": "string", "description": "Hashed or secured account credential" },
+        "phone": { "type": "string", "description": "Contact phone number" },
+        "address": { "type": "string", "description": "Delivery address" },
+        "city": { "type": "string", "description": "City e.g. Dankuni" },
+        "pincode": { "type": "string", "description": "Postal code" },
+        "membershipPlan": { "type": "string", "description": "Selected membership plan" },
+        "createdAt": { "type": "string", "description": "Account creation timestamp" }
+      }
+    },
+    "products": {
+      "fields": {
+        "name": { "type": "string", "description": "Product name" },
+        "category": { "type": "string", "description": "Category: spices, dry-fruits, dals, rice" },
+        "price": { "type": "number", "description": "Discounted price in INR" },
+        "originalPrice": { "type": "number", "description": "MRP in INR" },
+        "unit": { "type": "string", "description": "Unit size e.g. 500g, 1kg" },
+        "stock": { "type": "number", "description": "Available stock quantity" },
+        "image": { "type": "string", "description": "Image URL" },
+        "description": { "type": "string", "description": "Product description" },
+        "bengaliName": { "type": "string", "description": "Bengali translated name" }
+      }
+    },
+    "orders": {
+      "fields": {
+        "customerName": { "type": "string", "description": "Name of the customer" },
+        "customerPhone": { "type": "string", "description": "Customer mobile phone" },
+        "customerEmail": { "type": "string", "description": "Customer email" },
+        "deliveryAddress": { "type": "string", "description": "Delivery address" },
+        "items": { "type": "array", "description": "List of cart items ordered" },
+        "totalAmount": { "type": "number", "description": "Total order amount in INR" },
+        "paymentMethod": { "type": "string", "description": "COD, UPI, Netbanking" },
+        "status": { "type": "string", "description": "pending, packed, out-for-delivery, delivered, cancelled" },
+        "orderDate": { "type": "string", "description": "Order placement date timestamp" }
+      }
+    },
+    "customers": {
+      "fields": {
+        "name": { "type": "string", "description": "Customer name" },
+        "phone": { "type": "string", "description": "Phone number" },
+        "email": { "type": "string", "description": "Email address" },
+        "address": { "type": "string", "description": "Customer address" },
+        "totalOrders": { "type": "number", "description": "Number of placed orders" },
+        "totalSpent": { "type": "number", "description": "Total amount spent" }
+      }
+    },
+    "portal_logins": {
+      "fields": {
+        "role": { "type": "string", "description": "Role: customer, owner, delivery" },
+        "identifier": { "type": "string", "description": "Email, phone or username" },
+        "name": { "type": "string", "description": "User name" },
+        "loginTime": { "type": "string", "description": "Timestamp of login" },
+        "metadata": { "type": "object", "description": "Optional login metadata" }
+      }
+    },
+    "members": {
+      "fields": {
+        "name": { "type": "string", "description": "Member name" },
+        "email": { "type": "string", "description": "Member email" },
+        "phone": { "type": "string", "description": "Member phone" },
+        "plan": { "type": "string", "description": "Selected membership plan" },
+        "joinedDate": { "type": "string", "description": "Date joined" },
+        "status": { "type": "string", "description": "Status active/inactive" }
+      }
+    },
+    "plans": {
+      "fields": {
+        "name": { "type": "string", "description": "Plan name" },
+        "price": { "type": "number", "description": "Price in INR" },
+        "duration": { "type": "string", "description": "Duration e.g. 1 Month, 1 Year" },
+        "features": { "type": "array", "description": "Features list" }
+      }
+    },
+    "trainers": {
+      "fields": {
+        "name": { "type": "string", "description": "Specialist/Dietitian name" },
+        "specialty": { "type": "string", "description": "Domain specialty" },
+        "experience": { "type": "string", "description": "Experience years" },
+        "contact": { "type": "string", "description": "Contact info" }
+      }
+    },
+    "announcements": {
+      "fields": {
+        "title": { "type": "string", "description": "Announcement title" },
+        "message": { "type": "string", "description": "Announcement body message" },
+        "date": { "type": "string", "description": "Posted date" },
+        "category": { "type": "string", "description": "Announcement category" }
+      }
+    },
+    "inquiries": {
+      "fields": {
+        "name": { "type": "string", "description": "Customer name" },
+        "phone": { "type": "string", "description": "Phone number" },
+        "email": { "type": "string", "description": "Email address" },
+        "message": { "type": "string", "description": "Inquiry or feedback message" },
+        "createdAt": { "type": "string", "description": "Submission timestamp" }
+      }
+    }
+  }
+}

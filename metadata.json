@@ -1,0 +1,6 @@
+{
+  "name": "Fresh Care - Online Grocery Portal",
+  "description": "Modern online grocery portal for Spices, Dry Fruits, Dals, and Rice with customer shopping, owner management, and delivery partner dashboards.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

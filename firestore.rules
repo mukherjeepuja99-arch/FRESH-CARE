@@ -1,0 +1,71 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // FreshCare Grocery Store & Management Portal Collections
+    
+    // Customer User Accounts & Auth Profiles
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Products Catalog
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Customer Orders
+    match /orders/{orderId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Customers Data & Profiles
+    match /customers/{customerId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Portal Login Sessions & Input Logs
+    match /portal_logins/{loginId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Fresh Care Members & Registrations
+    match /members/{memberId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Membership Plans
+    match /plans/{planId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Trainers / Nutrition Specialists
+    match /trainers/{trainerId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Store Announcements & Offers
+    match /announcements/{announcementId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Inquiries & Contact Messages
+    match /inquiries/{inquiryId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Fallback for all documents
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
