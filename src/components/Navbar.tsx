@@ -164,7 +164,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-home"
               onClick={() => handleNavClick('home')}
-              className={`transition-colors hover:text-emerald-600 ${
+              className={`transition-colors hover:text-emerald-600 cursor-pointer ${
                 activeSection === 'home' ? 'text-emerald-600 font-bold' : ''
               }`}
             >
@@ -173,7 +173,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-products"
               onClick={() => handleNavClick('products')}
-              className={`transition-colors hover:text-emerald-600 ${
+              className={`transition-colors hover:text-emerald-600 cursor-pointer ${
                 activeSection === 'products' ? 'text-emerald-600 font-bold' : ''
               }`}
             >
@@ -182,7 +182,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-plans"
               onClick={() => handleNavClick('plans')}
-              className={`transition-colors hover:text-emerald-600 ${
+              className={`transition-colors hover:text-emerald-600 cursor-pointer ${
                 activeSection === 'plans' ? 'text-emerald-600 font-bold' : ''
               }`}
             >
@@ -191,7 +191,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-orders"
               onClick={() => handleNavClick('orders')}
-              className={`transition-colors hover:text-emerald-600 ${
+              className={`transition-colors hover:text-emerald-600 cursor-pointer ${
                 activeSection === 'orders' ? 'text-emerald-600 font-bold' : ''
               }`}
             >
@@ -200,7 +200,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-about"
               onClick={() => handleNavClick('about')}
-              className={`transition-colors hover:text-emerald-600 ${
+              className={`transition-colors hover:text-emerald-600 cursor-pointer ${
                 activeSection === 'about' ? 'text-emerald-600 font-bold' : ''
               }`}
             >
@@ -209,7 +209,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="nav-contact"
               onClick={() => handleNavClick('contact')}
-              className={`transition-colors hover:text-emerald-600 ${
+              className={`transition-colors hover:text-emerald-600 cursor-pointer ${
                 activeSection === 'contact' ? 'text-emerald-600 font-bold' : ''
               }`}
             >
@@ -217,63 +217,75 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </nav>
 
-          {/* Action Buttons: Account & Cart */}
+          {/* Action Buttons: Customer Login OR (Account & Cart when Logged In) */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Mobile Search Toggle */}
             <button
               id="mobile-search-toggle"
               onClick={() => setShowSearchInput(!showSearchInput)}
-              className="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors"
+              className="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
               aria-label="Search"
             >
               <Search className="w-5 h-5" />
             </button>
 
-            {/* Auth / Profile Button */}
+            {/* Auth State Control: Hidden Account until logged in */}
             {isLoggedIn ? (
               <div className="flex items-center gap-2">
                 <button
                   id="user-profile-btn"
                   onClick={onOpenAuth}
-                  className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-slate-800 text-sm font-semibold transition-all border border-slate-200"
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-slate-800 text-sm font-semibold transition-all border border-slate-200 cursor-pointer"
+                  title="Account Settings"
                 >
                   <div className="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-bold">
-                    {userName ? userName.charAt(0) : 'U'}
+                    {userName ? userName.charAt(0).toUpperCase() : 'U'}
                   </div>
-                  <span className="hidden sm:inline max-w-[100px] truncate">{userName}</span>
+                  <span className="hidden sm:inline max-w-[120px] truncate">{userName}</span>
+                </button>
+
+                <button
+                  id="navbar-logout-btn"
+                  onClick={onLogout}
+                  className="hidden sm:flex items-center p-2 rounded-xl text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer border border-transparent hover:border-rose-200"
+                  title="Log out of account"
+                >
+                  <LogOut className="w-4 h-4" />
                 </button>
               </div>
             ) : (
               <button
                 id="login-btn"
                 onClick={onOpenAuth}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-semibold transition-all"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow-xs hover:shadow-md transition-all cursor-pointer"
               >
-                <User className="w-4 h-4 text-slate-600" />
-                <span>Login</span>
+                <User className="w-4 h-4" />
+                <span>Customer Login</span>
               </button>
             )}
 
-            {/* Shopping Cart Button */}
-            <button
-              id="header-cart-btn"
-              onClick={onOpenCart}
-              className="relative flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold shadow-md shadow-emerald-600/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
-            >
-              <ShoppingBag className="w-4 h-4" />
-              <span className="hidden sm:inline">Cart</span>
-              {totalCartCount > 0 && (
-                <span className="bg-amber-400 text-slate-950 text-xs font-extrabold px-1.5 py-0.2 rounded-full min-w-[20px] text-center shadow-xs animate-pulse">
-                  {totalCartCount}
-                </span>
-              )}
-            </button>
+            {/* Shopping Cart Button: ONLY VISIBLE WHEN LOGGED IN */}
+            {isLoggedIn && (
+              <button
+                id="header-cart-btn"
+                onClick={onOpenCart}
+                className="relative flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold shadow-md shadow-emerald-600/20 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+              >
+                <ShoppingBag className="w-4 h-4" />
+                <span className="hidden sm:inline">Cart</span>
+                {totalCartCount > 0 && (
+                  <span className="bg-amber-400 text-slate-950 text-xs font-extrabold px-1.5 py-0.2 rounded-full min-w-[20px] text-center shadow-xs animate-pulse">
+                    {totalCartCount}
+                  </span>
+                )}
+              </button>
+            )}
 
             {/* Mobile Hamburger Button */}
             <button
               id="mobile-menu-btn"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 transition-colors"
+              className="md:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -299,10 +311,51 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Mobile Menu Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-slate-200 flex flex-col gap-2">
+          <div className="md:hidden py-4 border-t border-slate-200 flex flex-col gap-2 animate-in fade-in slide-in-from-top-2 duration-200">
+            {/* Mobile Auth Status Banner */}
+            {!isLoggedIn ? (
+              <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl mb-1 flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-bold text-emerald-950">Guest Customer</p>
+                  <p className="text-[11px] text-emerald-700">Log in to view cart & order history</p>
+                </div>
+                <button
+                  onClick={() => {
+                    onOpenAuth();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg cursor-pointer"
+                >
+                  Login →
+                </button>
+              </div>
+            ) : (
+              <div className="p-3 bg-slate-100 border border-slate-200 rounded-xl mb-1 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-bold">
+                    {userName ? userName.charAt(0).toUpperCase() : 'U'}
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-slate-900">{userName}</p>
+                    <p className="text-[10px] text-slate-500">Logged in Customer</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    onLogout();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="p-1.5 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg text-xs font-semibold flex items-center gap-1 cursor-pointer"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            )}
+
             <button
               onClick={() => handleNavClick('home')}
-              className={`text-left px-3 py-2 rounded-lg font-medium text-sm ${
+              className={`text-left px-3 py-2 rounded-lg font-medium text-sm cursor-pointer ${
                 activeSection === 'home' ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-700'
               }`}
             >
@@ -310,7 +363,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
             <button
               onClick={() => handleNavClick('products')}
-              className={`text-left px-3 py-2 rounded-lg font-medium text-sm ${
+              className={`text-left px-3 py-2 rounded-lg font-medium text-sm cursor-pointer ${
                 activeSection === 'products' ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-700'
               }`}
             >
@@ -318,7 +371,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
             <button
               onClick={() => handleNavClick('plans')}
-              className={`text-left px-3 py-2 rounded-lg font-medium text-sm ${
+              className={`text-left px-3 py-2 rounded-lg font-medium text-sm cursor-pointer ${
                 activeSection === 'plans' ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-700'
               }`}
             >
@@ -326,7 +379,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
             <button
               onClick={() => handleNavClick('orders')}
-              className={`text-left px-3 py-2 rounded-lg font-medium text-sm ${
+              className={`text-left px-3 py-2 rounded-lg font-medium text-sm cursor-pointer ${
                 activeSection === 'orders' ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-700'
               }`}
             >
@@ -334,7 +387,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
             <button
               onClick={() => handleNavClick('about')}
-              className={`text-left px-3 py-2 rounded-lg font-medium text-sm ${
+              className={`text-left px-3 py-2 rounded-lg font-medium text-sm cursor-pointer ${
                 activeSection === 'about' ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-700'
               }`}
             >
@@ -342,12 +395,30 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
             <button
               onClick={() => handleNavClick('contact')}
-              className={`text-left px-3 py-2 rounded-lg font-medium text-sm ${
+              className={`text-left px-3 py-2 rounded-lg font-medium text-sm cursor-pointer ${
                 activeSection === 'contact' ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-700'
               }`}
             >
               📞 Contact Us
             </button>
+
+            {isLoggedIn && (
+              <button
+                onClick={() => {
+                  onOpenCart();
+                  setMobileMenuOpen(false);
+                }}
+                className="text-left px-3 py-2 rounded-lg font-bold text-sm bg-emerald-600 text-white flex items-center justify-between cursor-pointer"
+              >
+                <div className="flex items-center gap-2">
+                  <ShoppingBag className="w-4 h-4" />
+                  <span>My Grocery Cart</span>
+                </div>
+                <span className="bg-amber-400 text-slate-950 text-xs px-2 py-0.5 rounded-full font-extrabold">
+                  {totalCartCount} items
+                </span>
+              </button>
+            )}
 
             <div className="pt-2 border-t border-slate-200 mt-2">
               <p className="text-xs font-semibold text-slate-400 px-3 uppercase tracking-wider mb-2">
@@ -359,7 +430,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     onSelectRole('portal');
                     setMobileMenuOpen(false);
                   }}
-                  className={`py-2 px-2 text-xs font-semibold rounded-lg text-center flex items-center justify-center gap-1.5 ${
+                  className={`py-2 px-2 text-xs font-semibold rounded-lg text-center flex items-center justify-center gap-1.5 cursor-pointer ${
                     currentRole === 'portal' ? 'bg-purple-600 text-white' : 'bg-slate-100 text-slate-700'
                   }`}
                 >
@@ -371,7 +442,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     onSelectRole('member');
                     setMobileMenuOpen(false);
                   }}
-                  className={`py-2 px-2 text-xs font-semibold rounded-lg text-center flex items-center justify-center gap-1.5 ${
+                  className={`py-2 px-2 text-xs font-semibold rounded-lg text-center flex items-center justify-center gap-1.5 cursor-pointer ${
                     currentRole === 'member' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'
                   }`}
                 >
@@ -383,7 +454,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     onSelectRole('owner');
                     setMobileMenuOpen(false);
                   }}
-                  className={`py-2 px-2 text-xs font-semibold rounded-lg text-center flex items-center justify-center gap-1.5 ${
+                  className={`py-2 px-2 text-xs font-semibold rounded-lg text-center flex items-center justify-center gap-1.5 cursor-pointer ${
                     currentRole === 'owner' ? 'bg-amber-600 text-white' : 'bg-slate-100 text-slate-700'
                   }`}
                 >
@@ -395,7 +466,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     onSelectRole('delivery');
                     setMobileMenuOpen(false);
                   }}
-                  className={`py-2 px-2 text-xs font-semibold rounded-lg text-center flex items-center justify-center gap-1.5 ${
+                  className={`py-2 px-2 text-xs font-semibold rounded-lg text-center flex items-center justify-center gap-1.5 cursor-pointer ${
                     currentRole === 'delivery' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700'
                   }`}
                 >

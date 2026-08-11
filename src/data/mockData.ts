@@ -931,12 +931,12 @@ export const INITIAL_DELIVERY_PARTNER: DeliveryPartner = {
 };
 
 export const INITIAL_MEMBER_PROFILE: UserProfile = {
-  name: 'Swapnil Mukherjee',
-  email: 'swapnil.mukherjee@example.com',
-  phone: '+91 98300 45678',
-  address: 'House 22, Station Road, Garalgacha',
+  name: '',
+  email: '',
+  phone: '',
+  address: '',
   city: 'Dankuni',
   pincode: '712311',
   membershipPlan: 'Fresh Care Prime Saver Plan',
-  isLoggedIn: true,
+  isLoggedIn: false,
 };
